@@ -1,0 +1,11 @@
+1.  erlang的调度策略是基于reduction的， 每个进程在生成时被分配一定数量的reduction， reduction用完之后进程被调度出去
+    reduction的初始值在erl_vm.h中定义 #define CONTEXT_REDS 2000	 /* Swap process out after this number */
+    在erl_process.c的schedule中有如下语句:
+                reds -= execute_sys_tasks(p, &state, reds);
+                if(reds <= 0){
+                  p->fcalls = reds;
+		              goto sched_out_proc;
+		            }
+		            
+    execute_sys_tasks 会返回自己用掉的reds数， schedule函数则在调用该函数后判断reds是否小于0， 小于0则将进程调度出去。              
+                                     
