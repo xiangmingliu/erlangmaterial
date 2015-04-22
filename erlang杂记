@@ -7,5 +7,17 @@
 		              goto sched_out_proc;
 		            }
 		            
-    execute_sys_tasks 会返回自己用掉的reds数， schedule函数则在调用该函数后判断reds是否小于0， 小于0则将进程调度出去。              
+    execute_sys_tasks 会返回自己用掉的reds数， schedule函数则在调用该函数后判断reds是否小于0， 小于0则将进程调度出去。
+    
+ 2. erlang 指令码定义在/home/lxm/software/otp_src_17.4/erts/emulator/x86_64-unknown-linux-gnu/opt/plain下的
+    beam_opcodes.h， 由构建工具生成
+    在Beam_emu.c中的process_main中执行指令码：
+        emulator_loop:
+        	switch (Go) {
+        	
+        		OpCase(i_increment_yIId):
+        		        ...
+        		        ...
+        		        ...
+		}        
                                      
